@@ -11,11 +11,12 @@ from nltk.corpus import stopwords
 # Obtenemos las stopwords para español
 spanish_stop_words = stopwords.words('spanish')
 
+# Definir las etiquetas
 labels = [(0, "actividades"), (1, "historia")]
-# , (2, "inteligencia artificial"),
-        #   (3, "ciberseguridad")]
 
+# Crear dataset
 dataset = []
+
 #textos de "actividades para realizar en pareja"
 dataset.append((0, "Me gusta ir al cine con mi pareja."))
 dataset.append((0, "Me gusta ir a cenar con mi pareja."))

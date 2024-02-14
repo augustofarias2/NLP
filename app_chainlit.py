@@ -1,5 +1,9 @@
 from functions import *
 import chainlit as cl
+import pickle
+
+clasificador = pickle.load(open('clasificador.pickle', 'rb'))
+vectorizer = pickle.load(open('vectorizer.pickle', 'rb'))
 
 ##chainlit
 @cl.on_chat_start
