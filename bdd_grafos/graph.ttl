@@ -1,0 +1,71 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<Alberto_Olmedo> a owl:NamedIndividual ;
+    rdfs:label <Alberto_Olmedo> ;
+    owl:hasRama <Humor>,
+        <Literatura> .
+
+<Angel_Di_Maria> a owl:NamedIndividual ;
+    rdfs:label <Angel_Di_Maria> ;
+    owl:hasRama <Deporte> .
+
+<Cristian_Newell> a owl:NamedIndividual ;
+    rdfs:label <Cristian_Newell> ;
+    owl:hasRama <Deporte>,
+        <Politica> .
+
+<Ernesto_Che_Guevara> a owl:NamedIndividual ;
+    rdfs:label <Ernesto_Che_Guevara> ;
+    owl:hasRama <Literatura>,
+        <Politica> .
+
+<Fito_Paez> a owl:NamedIndividual ;
+    rdfs:label <Fito_Paez> ;
+    owl:hasRama <Musica> .
+
+<Juan_Carlos_Baglietto> a owl:NamedIndividual ;
+    rdfs:label <Juan_Carlos_Baglietto> ;
+    owl:hasRama <Musica> .
+
+<Lionel_Messi> a owl:NamedIndividual ;
+    rdfs:label <Lionel_Messi> ;
+    owl:hasRama <Deporte> .
+
+<Lisandro_de_la_Torre> a owl:NamedIndividual ;
+    rdfs:label <Lisandro_de_la_Torre> ;
+    owl:hasRama <Literatura>,
+        <Politica> .
+
+<Luciana_Aymar> a owl:NamedIndividual ;
+    rdfs:label <Luciana_Aymar> ;
+    owl:hasRama <Deporte> .
+
+<Migue_Granados> a owl:NamedIndividual ;
+    rdfs:label <Migue_Granados> ;
+    owl:hasRama <Humor> .
+
+<Nicki_Nicole> a owl:NamedIndividual ;
+    rdfs:label <Nicki_Nicole> ;
+    owl:hasRama <Musica> .
+
+<Roberto_Fontanarrosa> a owl:NamedIndividual ;
+    rdfs:label <Roberto_Fontanarrosa> ;
+    owl:hasRama <Humor>,
+        <Literatura> .
+
+<Humor> a owl:NamedIndividual ;
+    rdfs:label <Humor> .
+
+<Musica> a owl:NamedIndividual ;
+    rdfs:label <Musica> .
+
+<Politica> a owl:NamedIndividual ;
+    rdfs:label <Politica> .
+
+<Deporte> a owl:NamedIndividual ;
+    rdfs:label <Deporte> .
+
+<Literatura> a owl:NamedIndividual ;
+    rdfs:label <Literatura> .
+
