@@ -109,6 +109,7 @@ def prepare_prompt(query_str: str, nodes: list):#, user_info: str = None):
       "---------------------\n"
       "{context_str}\n"
       "---------------------\n"
+      ####VER ESTOOOOOOOOOOOOOOOOOOOOO -
       "RESPONDE EN ESPAÑOL. Dada la información de contexto anterior, y sin utilizar conocimiento previo, responde en español la siguiente consulta. En caso de que tu respuesta sea una receta envíala con título, ingredientes, procedimiento. No debes agregar recetas de otros libros ni material adicional. En caso de que la receta pedida no se encuentre en el material provisto debes aclararlo y no enviar receta.\n"
       "Pregunta: {query_str}\n"
       "Respuesta: "
