@@ -13,14 +13,6 @@ personas = ['Lionel_Messi', 'Luciana_Aymar', 'Alberto_Olmedo', 'Juan_Carlos_Bagl
 # Creamos nodos para las ramas en las que se destacaron
 ramas = ['Deporte', 'Humor', 'Musica', 'Literatura', 'Politica']
 
-
-#luciana messi angel crisne deporte
-#che lisandro crisnew politica
-#fito nicki baglietto musica
-#alberto roberto migue humor
-
-#roberto alberto Che Lisandro literatura
-
 # Agregamos nodos al grafo
 G.add_nodes_from(personas, bipartite=0)  # personas
 G.add_nodes_from(ramas, bipartite=1)     # ramas
