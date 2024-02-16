@@ -16,16 +16,17 @@ import nltk
 import pandas as pd
 # from time import sleep
 # from context import *
-nltk.download('stopwords')
-from nltk.corpus import stopwords
+
 import time
 import pickle
 from rdflib import Graph
 # import chainlit as cl
+from rdflib import Graph, Namespace, Literal
+from rdflib.plugins.sparql import prepareQuery
+import random
 
 start = time.time()
 
-spanish_stop_words = stopwords.words('spanish')
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"PyTorch está utilizando el dispositivo: {device}")
@@ -48,7 +49,7 @@ def zephyr_instruct_template(messages, add_generation_prompt=True):
     template_str += "{% if add_generation_prompt %}"
     template_str += "<|assistant|>\n"
     template_str += "{% endif %}"
-
+    print(11111111111111111111111111111111111111111111111111111111111111111111)
     # Crear un objeto de plantilla con la cadena de plantilla
     template = Template(template_str)
 
@@ -59,7 +60,7 @@ def zephyr_instruct_template(messages, add_generation_prompt=True):
 # Aquí hacemos la llamada el modelo
 def generate_answer(prompt: str, max_new_tokens: int = 256, ) -> None:
     try:
-        print(11111111111111111111111111111111111111111111111111111111111111111111)
+        print(2222222222222222222222222222222222222222222222222222222222222222)
         # Tu clave API de Hugging Face
         api_key = "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"
 
@@ -80,10 +81,10 @@ def generate_answer(prompt: str, max_new_tokens: int = 256, ) -> None:
                 "top_p": 0.95
             }
         }
-
+        print(4444444444444444444444444444444444444444444444444444444)
         # Realizamos la solicitud POST
         response = requests.post(api_url, headers=headers, json=data)
-        print(2222222222222222222222222222222222222222222222222222222)
+        print(5555555555555555555555555555555555555555555555555555555)
 
         # Extraer respuesta
         respuesta = response.json()[0]["generated_text"][len(prompt):]
@@ -109,7 +110,7 @@ def prepare_prompt(query_str: str, nodes: list):#, user_info: str = None):
       "Pregunta: {query_str}\n"
       "Respuesta: "
   )
-
+  print(6666666666666666666666666666666666666666666666666666)
   # Construimos el contexto de la pregunta
   context_str = ''
   for node in nodes:
@@ -126,17 +127,18 @@ def prepare_prompt(query_str: str, nodes: list):#, user_info: str = None):
       },
       {"role": "user", "content": TEXT_QA_PROMPT_TMPL.format(context_str=context_str, query_str=query_str)}, #,user_info_str=user_info)},
   ]
-
+  print(77777777777777777777777777777777777777777777777777)
   final_prompt = zephyr_instruct_template(messages)
+  print(88888888888888888888888888888888888888888888888888)
   return final_prompt
 
 
 
 def load_model():
     
-    print(3333333333333333333333333333333333333333333333333)
+    print(999999999999999999999999999999999999999999999999)
     
-    print('Cargando modelo de embeddings...')
+    print('Cargando modelo de embeddings EN FUNCTIONS...')
     embed_model = LangchainEmbedding(HuggingFaceEmbeddings(
         model_name='sentence-transformers/paraphrase-multilingual-mpnet-base-v2',
         model_kwargs={'device': 'cpu'},
@@ -145,7 +147,7 @@ def load_model():
     )
     print('Indexando documentos...')
     chroma_collection = load_collection()
-    print(4444444444444444444444444444444444444444444444444444444444444444)
+    print(10101010101010101010101010101010101010101010101010)
 
     # set up ChromaVectorStore and load in data
     vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
@@ -157,22 +159,31 @@ def load_model():
     )
     
     retriever = index.as_retriever(similarity_top_k=2)
-    print(5555555555555555555555555555555555555555555555555555555555)
+    print(12121212121212121212121212121212121212121212121212)
     return retriever
 
     
 def get_answer(retriever, query_str:str, context: str = None):
     nodes = retriever.retrieve(query_str)
-    print(6666666666666666666666666666666666666666666666666666)
+    print(1313131313131313131313131313131313131313131313131313)
     final_prompt = prepare_prompt(query_str, nodes)#, context)
+    print(14141441414141414141414141414141414141414141414141414)
     return generate_answer(final_prompt)
 
-print(777777777777777777777777777777777777777777777777777)
 
+print("RESPUESTA")
+print(get_answer(load_model(), "¿Cuál es la historia de Rosario?"))
+
+
+
+
+
+#_______________________________________________________________________________________
+#_______________________________________________________________________________________
 def obtener_actividades_aleatorias(df, num_actividades=2):
     # Seleccionar filas aleatorias del DataFrame
     actividades_aleatorias = df.sample(n=num_actividades)
-    
+    print("15"*10)
     # Iterar sobre las filas seleccionadas y formatear la salida
     resultados = []
     for _, actividad in actividades_aleatorias.iterrows():
@@ -187,45 +198,41 @@ def obtener_actividades_aleatorias(df, num_actividades=2):
     
     return resultado_final
 
-def obtener_personajes_aleatorios(df, num_personajes=2):
-    # Quiero cargar mi grafo de conocimiento desde bdd_grafos/graph.ttl en formato turtle
+def obtener_personajes():
+    # Cargar el grafo RDF
+    g = Graph()
+    g.parse("./bdd_grafos/graph.ttl", format="turtle")
+    print("16"*10)
+    # Definir los prefijos de los espacios de nombres
+    n = Namespace("http://example.org/rosario/")
+    EX = Namespace("http://example.org/attributes/")
 
-    #Quiero cargar el grafo en un objeto rdflib.Graph
-    graph = Graph()
-    graph.parse('bdd_grafos/graph.ttl', format='ttl')
+    query = prepareQuery("""
+        SELECT ?personaje ?rama ?vive ?edad ?sexo
+        WHERE {
+            ?personaje EX:vive "Si" .
+            ?personaje EX:sexo ?sexo .
+            ?personaje EX:rama ?rama .
+            ?personaje EX:edad ?edad .
+        }
+    """, initNs={"EX": EX})
 
-    # Quiero hacer una consulta SPARQL para obtener los personajes que sean de un deporte especifico.
+    # Ejecutar la consulta
+    resultados = g.query(query)
 
+    # Convertir los resultados a una lista para facilitar la selección aleatoria
+    personajes = list(resultados)
 
+    # Seleccionar aleatoriamente 2 personajes
+    personajes_aleatorios = random.sample(personajes, 2)
 
-
-
-
-
-    # y luego hacer una consulta SPARQL para obtener los personajes
-    # que sean de la ciudad de Rosario.
-    
-
-    personajes_aleatorios = df.sample(n=num_personajes)
-    
-    # Iterar sobre las filas seleccionadas y formatear la salida
-    resultados = []
-    for _, personaje in personajes_aleatorios.iterrows():
-        nombre = personaje['Nombre']
-        descripcion = personaje['descripcion']
-        resultado = f"Nombre: {nombre}\nDescripcion: {descripcion}"
-        resultados.append(resultado)
-            
-    # Unir los resultados en un solo string
-    resultado_final = '\n\n'.join(resultados)
-    
-    return resultado_final
+    return personajes_aleatorios
 
 def pregunta_clasificar(query: str, retriever):
     # Aquí se clasificaría la pregunta importando el vectorizador y el clasificador
-    vectorizador = pickle.load(open('vectorizador.pickle', 'rb'))
+    vectorizador = pickle.load(open('vectorizer.pickle', 'rb'))
     clasificador = pickle.load(open('clasificador.pickle', 'rb'))
-
+    print("17"*10)
     vectorized_query = vectorizador.transform([query])
     prediction = clasificador.predict(vectorized_query)
     if prediction[0] == 0:
@@ -234,11 +241,29 @@ def pregunta_clasificar(query: str, retriever):
         return obtener_actividades_aleatorias(df,2)
          
     elif prediction[0] == 1:
-        return "personaje"
-    else:
-        get_answer(retriever, query)
-    
-    return prediction[0]
+        personajes_aleatorios = obtener_personajes()
+       
+        # Inicializar un string vacío para almacenar el output
+        output_string = ""
+       
+        # Iterar sobre cada personaje y concatenar sus atributos al string
+        for row in personajes_aleatorios:
+            # Extraer solo el nombre del enlace
+            nombre = (str(row.personaje).split("/")[-1]).replace("_", " ")
+
+            output_string += "Nombre: " + nombre + "\n"
+            output_string += "Rama: " + str(row.rama) + "\n"
+            # output_string += "Vive: " + str(row.vive) + "\n"
+            output_string += "Edad: " + str(row.edad) + "\n"
+            output_string += "Sexo: " + str(row.sexo) + "\n\n"
+
+        return output_string
+    elif prediction[0] == 2: 
+        print("--------ESTOY EN EL 2---------")
+        respuesta = get_answer(retriever, query)
+        print("18"*10)
+        return respuesta
+
 
 
 # retriever = load_model()

@@ -20,7 +20,7 @@ def load_collection():
         print(f"No se pudo eliminar la carpeta '{carpeta_a_eliminar}': {e}")
 
     chroma_client = chromadb.PersistentClient()
-    print('Cargando modelo de embeddings...')
+    print('Cargando modelo de embeddings EN CREATE_DB...')
 
     embed_model = embedding_functions.SentenceTransformerEmbeddingFunction(
         model_name='sentence-transformers/paraphrase-multilingual-mpnet-base-v2',

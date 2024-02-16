@@ -1,71 +1,63 @@
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ns1: <http://example.org/attributes/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<Alberto_Olmedo> a owl:NamedIndividual ;
-    rdfs:label <Alberto_Olmedo> ;
-    owl:hasRama <Humor>,
-        <Literatura> .
+<http://example.org/rosario/Alberto_Olmedo> ns1:edad 54 ;
+    ns1:rama "Humor" ;
+    ns1:sexo "Hombre" ;
+    ns1:vive "No" .
 
-<Angel_Di_Maria> a owl:NamedIndividual ;
-    rdfs:label <Angel_Di_Maria> ;
-    owl:hasRama <Deporte> .
+<http://example.org/rosario/Angel_Di_Maria> ns1:edad 35 ;
+    ns1:rama "Deporte" ;
+    ns1:sexo "Hombre" ;
+    ns1:vive "Si" .
 
-<Cristian_Newell> a owl:NamedIndividual ;
-    rdfs:label <Cristian_Newell> ;
-    owl:hasRama <Deporte>,
-        <Politica> .
+<http://example.org/rosario/Ernesto_Che_Guevara> ns1:edad 95 ;
+    ns1:rama "Politica" ;
+    ns1:sexo "Hombre" ;
+    ns1:vive "No" .
 
-<Ernesto_Che_Guevara> a owl:NamedIndividual ;
-    rdfs:label <Ernesto_Che_Guevara> ;
-    owl:hasRama <Literatura>,
-        <Politica> .
+<http://example.org/rosario/Fito_Paez> ns1:edad 58 ;
+    ns1:rama "Musica" ;
+    ns1:sexo "Hombre" ;
+    ns1:vive "Si" .
 
-<Fito_Paez> a owl:NamedIndividual ;
-    rdfs:label <Fito_Paez> ;
-    owl:hasRama <Musica> .
+<http://example.org/rosario/Hermes_Binner> ns1:edad 80 ;
+    ns1:rama "Politica" ;
+    ns1:sexo "Hombre" ;
+    ns1:vive "No" .
 
-<Juan_Carlos_Baglietto> a owl:NamedIndividual ;
-    rdfs:label <Juan_Carlos_Baglietto> ;
-    owl:hasRama <Musica> .
+<http://example.org/rosario/Juan_Carlos_Baglietto> ns1:edad 67 ;
+    ns1:rama "Musica" ;
+    ns1:sexo "Hombre" ;
+    ns1:vive "Si" .
 
-<Lionel_Messi> a owl:NamedIndividual ;
-    rdfs:label <Lionel_Messi> ;
-    owl:hasRama <Deporte> .
+<http://example.org/rosario/Lionel_Messi> ns1:edad 36 ;
+    ns1:rama "Deporte" ;
+    ns1:sexo "Hombre" ;
+    ns1:vive "Si" .
 
-<Lisandro_de_la_Torre> a owl:NamedIndividual ;
-    rdfs:label <Lisandro_de_la_Torre> ;
-    owl:hasRama <Literatura>,
-        <Politica> .
+<http://example.org/rosario/Lisandro_De_La_Torre> ns1:edad 64 ;
+    ns1:rama "Politica" ;
+    ns1:sexo "Hombre" ;
+    ns1:vive "No" .
 
-<Luciana_Aymar> a owl:NamedIndividual ;
-    rdfs:label <Luciana_Aymar> ;
-    owl:hasRama <Deporte> .
+<http://example.org/rosario/Luciana_Aymar> ns1:edad 43 ;
+    ns1:rama "Deporte" ;
+    ns1:sexo "Mujer" ;
+    ns1:vive "Si" .
 
-<Migue_Granados> a owl:NamedIndividual ;
-    rdfs:label <Migue_Granados> ;
-    owl:hasRama <Humor> .
+<http://example.org/rosario/Migue_Granados> ns1:edad 37 ;
+    ns1:rama "Humor" ;
+    ns1:sexo "Hombre" ;
+    ns1:vive "Si" .
 
-<Nicki_Nicole> a owl:NamedIndividual ;
-    rdfs:label <Nicki_Nicole> ;
-    owl:hasRama <Musica> .
+<http://example.org/rosario/Nicki_Nicole> ns1:edad 23 ;
+    ns1:rama "Musica" ;
+    ns1:sexo "Mujer" ;
+    ns1:vive "Si" .
 
-<Roberto_Fontanarrosa> a owl:NamedIndividual ;
-    rdfs:label <Roberto_Fontanarrosa> ;
-    owl:hasRama <Humor>,
-        <Literatura> .
-
-<Humor> a owl:NamedIndividual ;
-    rdfs:label <Humor> .
-
-<Musica> a owl:NamedIndividual ;
-    rdfs:label <Musica> .
-
-<Politica> a owl:NamedIndividual ;
-    rdfs:label <Politica> .
-
-<Deporte> a owl:NamedIndividual ;
-    rdfs:label <Deporte> .
-
-<Literatura> a owl:NamedIndividual ;
-    rdfs:label <Literatura> .
+<http://example.org/rosario/Roberto_Fontanarrosa> ns1:edad 72 ;
+    ns1:rama "Humor" ;
+    ns1:sexo "Hombre" ;
+    ns1:vive "No" .
 

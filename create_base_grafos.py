@@ -1,63 +1,51 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+from rdflib import Graph, Literal, Namespace, URIRef
 import os
-from rdflib import Graph, URIRef, RDF, RDFS
-import urllib.parse
 
-# Creamos un grafo dirigido
-G = nx.DiGraph()
-
-# Creamos nodos para las personas históricas de la ciudad de Rosario
-personas = ['Lionel_Messi', 'Luciana_Aymar', 'Alberto_Olmedo', 'Juan_Carlos_Baglietto', 'Nicki_Nicole', 'Fito_Paez', 'Migue_Granados', 'Roberto_Fontanarrosa', 'Angel_Di_Maria', 'Ernesto_Che_Guevara', 'Lisandro_de_la_Torre', 'Cristian_Newell']
-
-# Creamos nodos para las ramas en las que se destacaron
-ramas = ['Deporte', 'Humor', 'Musica', 'Literatura', 'Politica']
-
-# Agregamos nodos al grafo
-G.add_nodes_from(personas, bipartite=0)  # personas
-G.add_nodes_from(ramas, bipartite=1)     # ramas
-
-# Creamos relaciones entre personas y ramas
-relaciones = [('Lionel_Messi', 'Deporte'), ('Luciana_Aymar', 'Deporte'),
-             ('Angel_Di_Maria', 'Deporte'),
-             ('Fito_Paez', 'Musica'),
-             ('Nicki_Nicole', 'Musica'), ('Juan_Carlos_Baglietto', 'Musica'),
-             ('Alberto_Olmedo', 'Humor'), ('Migue_Granados', 'Humor'),
-             ('Roberto_Fontanarrosa', 'Humor'), ('Ernesto_Che_Guevara', 'Politica'),
-             ('Lisandro_de_la_Torre', 'Politica'), ('Cristian_Newell', 'Politica'),
-             ('Roberto_Fontanarrosa', 'Literatura'), ('Alberto_Olmedo', 'Literatura'),
-             ('Cristian_Newell', 'Deporte'),
-             ('Ernesto_Che_Guevara', 'Literatura'), ('Lisandro_de_la_Torre', 'Literatura')
-               ]
-
-# Agregamos relaciones al grafo
-G.add_edges_from(relaciones)
-
-#Crear un rdf con los datos
+# Crear un grafo RDF
 g = Graph()
 
-# Agregamos las personas como instancias de la clase Persona
-for persona in personas:
-    persona_uri = urllib.parse.quote(persona)
-    g.add((URIRef(persona_uri), RDF.type, URIRef('http://www.w3.org/2002/07/owl#NamedIndividual')))
-    g.add((URIRef(persona_uri), RDFS.label, URIRef(persona)))
+# Definir algunos espacios de nombres y recursos
+n = Namespace("http://example.org/rosario/")
+EX = Namespace("http://example.org/attributes/")
 
-# Agregamos las ramas como instancias de la clase Rama
-for rama in ramas:
-    rama_uri = urllib.parse.quote(rama)
-    g.add((URIRef(rama_uri), RDF.type, URIRef('http://www.w3.org/2002/07/owl#NamedIndividual')))
-    g.add((URIRef(rama_uri), RDFS.label, URIRef(rama)))
+# Tripletas de datos
+tripletas = [
+    (n.Lionel_Messi, "Deporte", "Si", 36, "Hombre"),
+    (n.Luciana_Aymar, "Deporte", "Si", 43, "Mujer"),
+    (n.Alberto_Olmedo, "Humor", "No", 54, "Hombre"),
+    (n.Juan_Carlos_Baglietto, "Musica", "Si", 67, "Hombre"),
+    (n.Nicki_Nicole, "Musica", "Si", 23, "Mujer"),
+    (n.Fito_Paez, "Musica", "Si", 58, "Hombre"),
+    (n.Migue_Granados, "Humor", "Si", 37, "Hombre"),
+    (n.Roberto_Fontanarrosa, "Humor", "No", 72, "Hombre"),
+    (n.Angel_Di_Maria, "Deporte", "Si", 35, "Hombre"),
+    (n.Ernesto_Che_Guevara, "Politica", "No", 95, "Hombre"),
+    (n.Lisandro_De_La_Torre, "Politica", "No", 64, "Hombre"),
+    (n.Hermes_Binner, "Politica", "No", 80, "Hombre")
+]
 
-# Agregamos las relaciones entre personas y ramas
-for relacion in relaciones:
-    g.add((URIRef(urllib.parse.quote(relacion[0])), URIRef('http://www.w3.org/2002/07/owl#hasRama'), URIRef(urllib.parse.quote(relacion[1])))
-    )
-path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bdd_grafos')
+# Añadir tripletas al grafo
+for sujeto, rama, vive, edad, sexo in tripletas:
+    g.add((sujeto, EX.rama, Literal(rama)))
+    g.add((sujeto, EX.vive, Literal(vive)))
+    g.add((sujeto, EX.edad, Literal(edad)))
+    g.add((sujeto, EX.sexo, Literal(sexo)))
+
+# Convertir el grafo RDF a un grafo de NetworkX
+nx_graph = nx.Graph()
+
+for s, p, o in g:
+    nx_graph.add_edge(s, o)
+
+# Dibujar el grafo utilizando Matplotlib
+# plt.figure(figsize=(12, 8))
+# pos = nx.spring_layout(nx_graph)
+# nx.draw(nx_graph, pos, with_labels=True, node_size=2000, font_size=12, font_weight='bold', node_color='skyblue')
+# plt.title("Grafo RDF de personajes históricos de Rosario y sus atributos")
+# plt.show()
 
 #Guardar el grafo en formato tutle en la carpeta bdd_grafos
+path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bdd_grafos')
 g.serialize(destination=os.path.join(path, f'graph.ttl'), format='turtle')
-
-# Imprimir el grafo
-# pos = nx.spring_layout(G)
-# nx.draw(G, pos, with_labels=True, node_color='lightblue', edge_color='grey')
-# plt.show()
