@@ -89,19 +89,17 @@ def generate_answer(prompt: str, max_new_tokens: int = 256, ) -> None:
         print(f"An error occurred: {e}")
 
 # Esta función prepara el prompt en estilo QA
-def prepare_prompt(query_str: str, nodes: list):#, user_info: str = None):
+def prepare_prompt(query_str: str, nodes: list, info: str = None):
   TEXT_QA_PROMPT_TMPL = (
-    #   "La información del usuario es la siguiente:\n"
-    #     "---------------------\n"
-    #     "{user_info_str}\n"
-    #     "---------------------\n"
+      "La información de actividades o personajes es la siguiente:\n"
+      "---------------------\n"
+      "{info}\n"
+      "---------------------\n"
       "La información de contexto es la siguiente:\n"
       "---------------------\n"
       "{context_str}\n"
       "---------------------\n"
-      ####VER ESTOOOOOOOOOOOOOOOOOOOOO -
-      "RESPONDE EN ESPAÑOL. Dada la información de contexto anterior, y sin utilizar conocimiento previo, responde en español la siguiente consulta.\n"
-      #En caso de que tu respuesta sea una receta envíala con título, ingredientes, procedimiento. No debes agregar recetas de otros libros ni material adicional. En caso de que la receta pedida no se encuentre en el material provisto debes aclararlo y no enviar receta.\n"
+      "RESPONDE EN ESPAÑOL. Dada la información de contexto anterior, y sin utilizar conocimiento previo, responde en español la siguiente consulta.Si la pregunta pedida no se encuentra en el material provisto debes aclararlo.\n" #En caso de que tu respuesta sea personajes destacados de Rosario, envíala con Nombre, Edad, Rama y Sexo extrayéndolo de {info}. Si tu respuesta son actividades envíala con Lugar, Descripción y Ubicación extrayéndolo de {info}.\n"
       "Pregunta: {query_str}\n"
       "Respuesta: "
   )
@@ -120,7 +118,8 @@ def prepare_prompt(query_str: str, nodes: list):#, user_info: str = None):
           "role": "system",
           "content": "Eres un asistente especialista en la historia de la ciudad de Rosario que siempre responde con respuestas veraces, útiles y basadas en hechos.",
       },
-      {"role": "user", "content": TEXT_QA_PROMPT_TMPL.format(context_str=context_str, query_str=query_str)}, #,user_info_str=user_info)},
+      {"role": "user", 
+       "content": TEXT_QA_PROMPT_TMPL.format(context_str=context_str, query_str=query_str,info=info)},
   ]
   print(77777777777777777777777777777777777777777777777777)
   final_prompt = zephyr_instruct_template(messages)
@@ -221,11 +220,14 @@ def pregunta_clasificar(retriever, query: str):
     vectorized_query = vectorizador.transform([query])
     prediction = clasificador.predict(vectorized_query)
     if prediction[0] == 0:
+        print("--------ESTOY EN EL 0---------")
         #cargar csv con las actividades
         df = pd.read_csv('data_structured/actividades.csv')
         return obtener_actividades_aleatorias(df,2)
-         
+        # return get_answer(retriever, query, obtener_actividades_aleatorias(df,2))
+
     elif prediction[0] == 1:
+        print("--------ESTOY EN EL 1---------")
         personajes_aleatorios = obtener_personajes()
        
         # Inicializar un string vacío para almacenar el output
@@ -243,6 +245,7 @@ def pregunta_clasificar(retriever, query: str):
             output_string += "Sexo: " + str(row.sexo) + "\n\n"
 
         return output_string
+        # return get_answer(retriever, query, output_string)
     
     elif prediction[0] == 2: 
         print("--------ESTOY EN EL 2---------")
