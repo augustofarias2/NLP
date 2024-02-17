@@ -3,6 +3,7 @@ inicio = time.time()
 
 from create_functions import *
 import chainlit as cl
+# from create_db import *
 
 # clasificador = pickle.load(open('clasificador.pickle', 'rb'))
 # vectorizer = pickle.load(open('vectorizer.pickle', 'rb'))
@@ -38,7 +39,7 @@ async def main(message: cl.Message):
     retriever_model = cl.user_session.get("retriever_model")
     
     # Send the final answer.
-    await cl.Message(content=pregunta_clasificar(message.content, retriever_model)).send()
+    await cl.Message(content=pregunta_clasificar(retriever_model, message.content)).send()
 
 end = time.time()
 # print("------------------------------------")

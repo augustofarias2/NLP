@@ -8,19 +8,14 @@ from llama_index.vector_stores import ChromaVectorStore
 
 from jinja2 import Template
 import requests
-# from decouple import config
 import torch
 from create_db import load_collection
-import nltk
-# from maps_scraper import *
 import pandas as pd
-# from time import sleep
-# from context import *
+
 
 import time
 import pickle
 from rdflib import Graph
-# import chainlit as cl
 from rdflib import Graph, Namespace, Literal
 from rdflib.plugins.sparql import prepareQuery
 import random
@@ -132,8 +127,6 @@ def prepare_prompt(query_str: str, nodes: list):#, user_info: str = None):
   print(88888888888888888888888888888888888888888888888888)
   return final_prompt
 
-
-
 def load_model():
     
     print(999999999999999999999999999999999999999999999999)
@@ -155,7 +148,7 @@ def load_model():
     service_context = ServiceContext.from_defaults(embed_model=embed_model, llm=None)
  
     index = VectorStoreIndex.from_vector_store(
-        vector_store, storage_context=storage_context, service_context=service_context, show_progress=True
+        vector_store=vector_store, storage_context=storage_context, service_context=service_context, show_progress=True
     )
     
     retriever = index.as_retriever(similarity_top_k=2)
@@ -171,15 +164,7 @@ def get_answer(retriever, query_str:str, context: str = None):
     return generate_answer(final_prompt)
 
 
-print("RESPUESTA")
-print(get_answer(load_model(), "¿Cuál es la historia de Rosario?"))
 
-
-
-
-
-#_______________________________________________________________________________________
-#_______________________________________________________________________________________
 def obtener_actividades_aleatorias(df, num_actividades=2):
     # Seleccionar filas aleatorias del DataFrame
     actividades_aleatorias = df.sample(n=num_actividades)
@@ -228,7 +213,7 @@ def obtener_personajes():
 
     return personajes_aleatorios
 
-def pregunta_clasificar(query: str, retriever):
+def pregunta_clasificar(retriever, query: str):
     # Aquí se clasificaría la pregunta importando el vectorizador y el clasificador
     vectorizador = pickle.load(open('vectorizer.pickle', 'rb'))
     clasificador = pickle.load(open('clasificador.pickle', 'rb'))
@@ -258,18 +243,9 @@ def pregunta_clasificar(query: str, retriever):
             output_string += "Sexo: " + str(row.sexo) + "\n\n"
 
         return output_string
+    
     elif prediction[0] == 2: 
         print("--------ESTOY EN EL 2---------")
         respuesta = get_answer(retriever, query)
         print("18"*10)
         return respuesta
-
-
-
-# retriever = load_model()
-# print("fin"*10)
-# print(get_answer(retriever, "¿Cuál es la historia de Rosario?"))
-
-# end = time.time()
-# print(f"Tiempo de ejecución: {end - start} segundos.")
-
