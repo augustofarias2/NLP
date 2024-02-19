@@ -4,4 +4,4 @@ The objetive is to build an expert chatbot in a determinated task. I have to use
 
 
 
-![Rosario](C:\Users\augus\Desktop\FCEIA\TUIA\NLP\monumento.webp)
+![Rosario](C:\Users\augus\Desktop\FCEIA\TUIA\NLP\ROSARIO-LUGARES-CONOCER.jpg)
