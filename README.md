@@ -1,6 +1,7 @@
-# NLP: Trabajo Práctico Final - Procesamiento del Lenguaje Natura
+## NLP: Trabajo Práctico Final - Procesamiento del Lenguaje Natural
 <p align="center">
-  <img src="https://github.com/augustofarias2/NLP/blob/main/ROSARIO-LUGARES-CONOCER.jpg" alt="Rosario">
+  <img src="https://github.com/augustofarias2/NLP/blob/main/Images/welcome.png" alt="welcome">
+  <img src="https://github.com/augustofarias2/NLP/blob/main/Images/ask.png" alt="ask">
 </p>
 
 ## Introducción
@@ -29,12 +30,15 @@ source env\Scripts\activate
 ```bash
 pip install -r requirements.txt
 ```
-### Instala dependencias
+### Ejecuta la app
 ```bash
 chainlit run app_chainlit.py -w
 ```
 
 ## Procedimiento de Trabajo
+<p align="center">
+  <img src="https://github.com/augustofarias2/NLP/blob/main/Images/esquema.png" alt="esquema">
+</p>
 
 ### 1. Obtención de Documentos PDF
 Se recopilaron documentos PDF con información relevante sobre la ciudad de Rosario y diversos temas históricos a través de fuentes confiables en línea.
@@ -79,3 +83,7 @@ El desarrollo de este chatbot especializado en la ciudad de Rosario representa u
 
 ## Futuras Direcciones
 Para futuras investigaciones, se podrían explorar nuevas fuentes de información, mejorar la precisión del clasificador y expandir las capacidades de conversación del chatbot. Además, se podría considerar la integración de tecnologías emergentes, como modelos de lenguaje más avanzados y técnicas de generación de texto más sofisticadas, para mejorar aún más la experiencia del usuario.
+
+<p align="center">
+  <img src="https://github.com/augustofarias2/NLP/blob/main/Images/ROSARIO-LUGARES-CONOCER.jpg" alt="Rosario">
+</p>

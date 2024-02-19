@@ -5,7 +5,6 @@ from llama_index import ServiceContext
 from llama_index.storage.storage_context import StorageContext
 from llama_index.vector_stores import ChromaVectorStore
 
-
 from jinja2 import Template
 import requests
 import torch
@@ -15,13 +14,11 @@ import pandas as pd
 
 import time
 import pickle
-from rdflib import Graph
-from rdflib import Graph, Namespace, Literal
+from rdflib import Graph, Namespace
 from rdflib.plugins.sparql import prepareQuery
 import random
 
 start = time.time()
-
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"PyTorch está utilizando el dispositivo: {device}")
@@ -44,7 +41,7 @@ def zephyr_instruct_template(messages, add_generation_prompt=True):
     template_str += "{% if add_generation_prompt %}"
     template_str += "<|assistant|>\n"
     template_str += "{% endif %}"
-    print(11111111111111111111111111111111111111111111111111111111111111111111)
+
     # Crear un objeto de plantilla con la cadena de plantilla
     template = Template(template_str)
 
@@ -55,7 +52,6 @@ def zephyr_instruct_template(messages, add_generation_prompt=True):
 # Aquí hacemos la llamada el modelo
 def generate_answer(prompt: str, max_new_tokens: int = 256, ) -> None:
     try:
-        print(2222222222222222222222222222222222222222222222222222222222222222)
         # Tu clave API de Hugging Face
         api_key = "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"
 
@@ -66,7 +62,6 @@ def generate_answer(prompt: str, max_new_tokens: int = 256, ) -> None:
         headers = {"Authorization": f"Bearer {api_key}"}
 
         # Datos para enviar en la solicitud POST
-        # Sobre los parámetros: https://huggingface.co/docs/transformers/main_classes/text_generation
         data = {
             "inputs": prompt,
             "parameters": {
@@ -76,10 +71,8 @@ def generate_answer(prompt: str, max_new_tokens: int = 256, ) -> None:
                 "top_p": 0.95
             }
         }
-        print(4444444444444444444444444444444444444444444444444444444)
         # Realizamos la solicitud POST
         response = requests.post(api_url, headers=headers, json=data)
-        print(5555555555555555555555555555555555555555555555555555555)
 
         # Extraer respuesta
         respuesta = response.json()[0]["generated_text"][len(prompt):]
@@ -103,7 +96,7 @@ def prepare_prompt(query_str: str, nodes: list, info: str = None):
       "Pregunta: {query_str}\n"
       "Respuesta: "
   )
-  print(6666666666666666666666666666666666666666666666666666)
+
   # Construimos el contexto de la pregunta
   context_str = ''
   for node in nodes:
@@ -121,15 +114,10 @@ def prepare_prompt(query_str: str, nodes: list, info: str = None):
       {"role": "user", 
        "content": TEXT_QA_PROMPT_TMPL.format(context_str=context_str, query_str=query_str,info=info)},
   ]
-  print(77777777777777777777777777777777777777777777777777)
   final_prompt = zephyr_instruct_template(messages)
-  print(88888888888888888888888888888888888888888888888888)
   return final_prompt
 
-def load_model():
-    
-    print(999999999999999999999999999999999999999999999999)
-    
+def load_model():    
     print('Cargando modelo de embeddings EN FUNCTIONS...')
     embed_model = LangchainEmbedding(HuggingFaceEmbeddings(
         model_name='sentence-transformers/paraphrase-multilingual-mpnet-base-v2',
@@ -139,7 +127,6 @@ def load_model():
     )
     print('Indexando documentos...')
     chroma_collection = load_collection()
-    print(10101010101010101010101010101010101010101010101010)
 
     # set up ChromaVectorStore and load in data
     vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
@@ -151,23 +138,19 @@ def load_model():
     )
     
     retriever = index.as_retriever(similarity_top_k=2)
-    print(12121212121212121212121212121212121212121212121212)
     return retriever
 
     
 def get_answer(retriever, query_str:str, context: str = None):
     nodes = retriever.retrieve(query_str)
-    print(1313131313131313131313131313131313131313131313131313)
     final_prompt = prepare_prompt(query_str, nodes)#, context)
-    print(14141441414141414141414141414141414141414141414141414)
     return generate_answer(final_prompt)
-
 
 
 def obtener_actividades_aleatorias(df, num_actividades=2):
     # Seleccionar filas aleatorias del DataFrame
     actividades_aleatorias = df.sample(n=num_actividades)
-    print("15"*10)
+
     # Iterar sobre las filas seleccionadas y formatear la salida
     resultados = []
     for _, actividad in actividades_aleatorias.iterrows():
@@ -224,7 +207,6 @@ def pregunta_clasificar(retriever, query: str):
         #cargar csv con las actividades
         df = pd.read_csv('data_structured/actividades.csv')
         return obtener_actividades_aleatorias(df,2)
-        # return get_answer(retriever, query, obtener_actividades_aleatorias(df,2))
 
     elif prediction[0] == 1:
         print("--------ESTOY EN EL 1---------")
@@ -245,10 +227,8 @@ def pregunta_clasificar(retriever, query: str):
             output_string += "Sexo: " + str(row.sexo) + "\n\n"
 
         return output_string
-        # return get_answer(retriever, query, output_string)
     
     elif prediction[0] == 2: 
         print("--------ESTOY EN EL 2---------")
         respuesta = get_answer(retriever, query)
-        print("18"*10)
         return respuesta
