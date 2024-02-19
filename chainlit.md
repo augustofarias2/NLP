@@ -11,9 +11,3 @@
 ¡Estás en el lugar correcto! ¡Explora, aprende y sumérgete en la historia vibrante de Rosario junto a mí!
 
 ¡Adelante, hazme cualquier consulta que tengas sobre Rosario y estaré encantada de ayudarte!
-
-<h1 align="right">
-  <br>
-  <img src="https://raw.githubusercontent.com/GuidoLorenzetti/AI-Chef-Bot/main/app/styles/logo1-removebg-preview.png" alt="MONUMENTO" width="200"></a>
-  <br>
-</h1>
