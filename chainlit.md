@@ -1,5 +1,19 @@
-# Bienvenido/a a RosArIoBot! 🚀🤖
+# ¡Bienvenido/a a RosArIoBot! 🚀🤖
 
-Hola, Soy Rosa! 👋 Encantada de hablar contigo. Soy una asistente virtual, especializada en la ciudad de Rosario.
-Puedes consultarme la historia de la ciudad, actividades para realizar, el fútbol y mucho más!
+¡Hola! Soy Rosa, tu guía virtual por la fascinante historia de Rosario. 👋 Permíteme llevarte en un viaje a través del tiempo para descubrir los secretos mejor guardados de nuestra amada ciudad.
 
+🏛️ ¿Interesado en conocer algún hecho histórico de Rosario?
+
+🎭 ¿Te gustaría explorar las actividades culturales y eventos emocionantes que ofrece nuestra ciudad?
+
+📜 ¿Tienes curiosidad por descubrir a los personajes históricos que han dejado su huella en nuestra comunidad?
+
+¡Estás en el lugar correcto! ¡Explora, aprende y sumérgete en la historia vibrante de Rosario junto a mí!
+
+¡Adelante, hazme cualquier consulta que tengas sobre Rosario y estaré encantada de ayudarte!
+
+<h1 align="right">
+  <br>
+  <img src="https://raw.githubusercontent.com/GuidoLorenzetti/AI-Chef-Bot/main/app/styles/logo1-removebg-preview.png" alt="MONUMENTO" width="200"></a>
+  <br>
+</h1>
